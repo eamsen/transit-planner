@@ -35,30 +35,38 @@ To obtain the version used during the experiments, visit the code section of the
   * Google C++ Style Guide Linter (included, only required for style checking)
 
 ## Building
-To build Transit Planner use:  
+To build Transit Planner use:
+
     $ make compile
 
-For performance measuring use the more optimised version:  
+For performance measuring use the more optimised version:
+
     $ make opt
 
-Alternatively you can build, test and check style at once using:  
+Alternatively you can build, test and check style at once using:
+
     $ make
 
 ## Testing (depends on gtest)
-To build and run the unit tests use:  
+To build and run the unit tests use:
+
     $ make test
 
 ## Checking Code Style
-To test code style conformance with the [Google C++ Style Guide](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml) use:  
+To test code style conformance with the [Google C++ Style Guide](http://google-styleguide.googlecode.com/svn/trunk/cppguide.xml) use:
+
     $ make checkstyle
 
 ## Usage
-To start the Transit Planner server use:  
+To start the Transit Planner server use:
+
     $ ./build/ServerMain [-i <datasets>] [-m <num-workers>] [-p <port>]
 
-where `<dataset>` are the GTFS directories of the transit networks,   
+where `<dataset>` are the GTFS directories of the transit networks,  
 `<num-workers>` are the maximum number of threads to be used and  
 `<port>` is the port to be used for listening.  
 
 To show the full usage help use:  
+
     $ ./build/ServerMain -h
+
