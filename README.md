@@ -15,7 +15,7 @@ connectivity problems.
 
 Authors
 -------
-Transit Planner and all its auxiliary modules were developed by [Eugen Sawin](mailto:esawin@gmail.com), [Philip Stahl](mailto:stahl@informatik.uni-freiburg.de) and [Jonas
+Transit Planner and all its auxiliary modules were developed by [Eugen Sawin](mailto:esawin@me73.com), [Philip Stahl](mailto:stahl@informatik.uni-freiburg.de) and [Jonas
 Sternisko](jonas.sternisko@mars.uni-freiburg.de) during a master team project
 at the *University of Freiburg in Germany*.
 
