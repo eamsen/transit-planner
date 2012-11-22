@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Transit Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="css/bootstrap-simplex.css" rel="stylesheet">
+  <link href="css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="css/docs.css" rel="stylesheet">
+</head>
+<body data-spy="scroll" data-target=".subnav" data-offset="50">
+<div class="container">
+
+  <!-- Masthead
+  ================================================== -->
+  <header class="jumbotron subhead" id="concepts">
+    <h1>Transit Planner</h1>
+    <p class="lead">An experiment on transfer patterns robustness in the presence of real-time updates</p>
+    <div class="subnav">
+      <ul class="nav nav-pills">
+        <li><a href="index.html">Overview</a></li>
+        <li class="active"><a href="concepts.html">Concepts</a></li>
+        <li><a href="implementation.html">Implementation</a></li>
+        <li><a href="results.html">Results</a></li>
+        <li><a href="conclusion.html">Conclusion</a></li>
+        <li><a href="code.html">Code</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section id="concepts">
+    <div class="page-header">
+      <h1>Concepts</h1>
+    </div>
+    <p>This page provides the theoretical background needed to understand <strong>transfer pattern routing</strong>. The notion of <strong>transit networks</strong> and their representation as <strong>GTFS feed</strong> is introduced.</p>
+
+    <div class="row"><br>
+    <div class="span6"><br>
+      <h2>Transit Network</h2>
+      <p>Road networks can be effectively modeled as <strong>directed graphs</strong>, where the nodes correspond to geographical positions and the arcs are used to depict the road connections between places. The arc costs amount to the time of travel along a road and are computed from the distance between two nodes it connects and the respective road type.</p>
+      <p>Whereas road network connections are independent of date and time, connectivity on transit networks depends on <strong>time tables</strong>. You cannot take a bus from the public garden to the main station at 3am, if the earliest bus goes at 6pm. Therefore the modeling of public transportation demands a different approach. There are two different representations of transit networks: the time-dependent and the time-expanded graph.</p>
+      <p>In a <strong>time-dependent</strong> graph there is one node for each stop and there are arcs connecting the nodes with a cost function depending on the departure time. The advantage of such a model is its <strong>compact size</strong>, but routing on it demands more complex search algorithms.<p>
+      <p>The <strong>time-expanded</strong> approach is what we use for the Transit Planner. In this model each node represents a stop at a specific time and each arc represents an actual connection or transfer. The main advantage of the time-expanded model is its <strong>general domain-independent form</strong>, making general shortest-path search algorithms like Dijkstra applicable. The trade-off is its bigger size. More details on the time-expanded graph is provided in the sections on the data structure for transit networks.</p> 
+    </div><br>
+    <div class="span6">
+      <h2><abbr title="General Transit Feed Specification">GTFS</abbr></h2>
+      <p>The <abbr title="General Transit Feed Specification">GTFS</abbr> is the de facto standard for the description of public transportation networks. A feed specification consists of multiple files describing various aspects of a transit network. In this text, we only describe elements of the GTFS, which are supported by Transit Planner's GTFS parser. For a complete specification of the stanard, please read the <a href="https://developers.google.com/transit/gtfs/reference">GTFS reference</a>.<p>
+      <p>The file <code>stops.txt</code> describes all public transportation stations, like bus stops, way or metro stations. In <code>trips.txt</code> a set of trips is defined. Each trip has a unique id and is associated with a service id. Service groups like <em>on sunday</em> or <em>on workdays</em> describe the days on which a trip is active. For each service id, an entry in <code>calendar.txt</code> provides information on weekday activity. For each trip, the file <code>stop_times.txt</code> lists successively served stops with corresponding arrival and departure times. Furthermore Transit Planner's network parser supports the optional file <code>frequency.txt</code>, which provides information about periodical trips, in order to reduce redundancy in <code>stop_times.txt</code>.</p>
+    </div><br>
+    </div>
+    <div class="row"><br>
+    <div class="span6"><br>
+      <h2>Transfer Patterns and Hubs</h2>
+      <p>State-of-the-art routing algorithms are not suitable for transit networks. The main reason is the difference between road and transit networks: whereas in road networks there is just one arc between two places, there is one arc between two stops for each connection in a transit network. Moreover each arc in a transit network is on at least one optimal path. The need for a routing algorithm exhibiting the speciality of transit networks arises.</p>
+      <p>Two observations motivate the idea behind <strong>transfer patterns</strong>. The first is that wherever you travel to, the optimal path has only a <strong>limited number of transfers</strong>. Furthermore the optimal path between two stops depending on the departure time is one of a <strong>limited set of paths</strong>. This set of paths from one stop to another is called transfer pattern.</p>
+      <p>Storing the transfer patterns for every pair of stops has quadratic space complexity. Besides, computing each pattern involves a full Dijkstra-search on the transit network. On a large network as for <em>New York City</em> a straight-forward computation of transfer patterns is rather impractical, if not impossible. Therefore the notion of <strong>hub stations</strong> is introduced. These correspond to the stops, where most transfers happen. Given a suitable set of hubs, we only compute and store the transfer patterns for each stop in the local neighborhood, until the nearest hubs. For each hub station a full Dijkstra-search is applied. Thereby, we drastically reduce the transfer patterns precomputation time and memory consumption.</p>
+    </div><br>
+    <div class="span6">
+      <h2>Dynamic Real-Time Updates</h2>
+      <p>In <strong>real-world scenarios</strong> public transportation vehicles are often <strong>delayed</strong> or even <strong>canceled</strong>. Trip delays change the network in such a way, that previously optimal paths may become non-optimal and new optimal routes can emerge. The efficiency of the search via transfer patterns is based on its <strong>costly precomputation</strong> of all shortest paths in the transit network. To deal with real-time updates, the recomputation of all transfer patterns must be avoided.</p>
+      <p>One aspect of our experiment is to evaluate, whether the originally precomputed transfer patterns are sufficiently roboust or redundant, such that most of the newly created optimal paths are already contained in them. If so, transfer patterns routing would be applicable for transit networks with dynamically changing trips and connections, without the costly precomputation of the transfer patterns for the network.</p>
+    </div><br>
+    </div>
+  </section>
+  <br><br><br><br>
+
+ <!-- Footer
+  ================================================== -->
+  <footer class="footer">
+    <p>&copy; 2011-2012: Eugen Sawin, Philip Stahl, Jonas Sternisko</p>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+  </footer>
+
+</div><!-- /container -->
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/application.js"></script>
+<script src="js/bootswatch.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+################################################################################
+# Description of the directories contained in the projects root directory      
+#
+################################################################################
+
+/              # root direcctory, should contain only Makefile, Cpplint.py and 
+                 maybe IDE's project files
+/build         # results of the make process
+/build/obj     # compiler object files
+/data          # Gtfs data
+/lib		   # additional libraries
+/log           # logger output
+/plot          # plot data for results, statistics etc.
+/src           # cource-Code
+/test          # test-Code
+/web	       # HTML/Javascript/server workspace

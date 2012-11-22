@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Transit Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="css/bootstrap-simplex.css" rel="stylesheet">
+  <link href="css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="css/docs.css" rel="stylesheet">
+</head>
+<body data-spy="scroll" data-target=".subnav" data-offset="50">
+<div class="container">
+
+  <!-- Masthead
+  ================================================== -->
+  <header class="jumbotron subhead" id="overview">
+    <h1>Transit Planner</h1>
+    <p class="lead">An experiment on transfer patterns robustness in the presence of real-time updates</p>
+    <div class="subnav">
+      <ul class="nav nav-pills">
+        <li class="active"><a href="index.html">Overview</a></li>
+        <li><a href="concepts.html">Concepts</a></li>
+        <li><a href="implementation.html">Implementation</a></li>
+        <li><a href="results.html">Results</a></li>
+        <li><a href="conclusion.html">Conclusion</a></li>
+        <li><a href="code.html">Code</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section id="overview">
+    <!--<div class="page-header">
+      <h1>Overview</h1>
+    </div>-->
+    <div class="hero-unit">
+      <div class="row">
+        <div class="span8">
+          <p><h2>Master Team Project</h2></p>
+        </div>
+      </div><br>
+      <div class="row">
+        <div class="span6">
+          <div class="row">
+            <div class="span2">
+              <p><h3>Description</h3></p>
+            </div>
+            <div class="span5"><p></p>
+              <p><address><em>This project extends to the development of an <strong>efficient route planner</strong> for public transportation networks, which is used to conduct experiments on the <strong>reliability of transfer patterns</strong> on dynamically modified networks.</em>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span2">
+              <p><h3>Timeframe</h3></p>
+            </div>
+            <div class="span5"><p></p>
+              <p><address>Winter 2011 - Summer 2012</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span2">
+              <p><h3>Institute</h3></p>
+            </div>
+            <div class="span5"><p></p>
+              <p><address>University of Freiburg<br>
+                Department of Computer Science<br>
+                <a href="http://ad.informatik.uni-freiburg.de/staff/bast/">Chair of Algorithms and Data Structures</a></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span2">
+              <p><h3>Supervisor</h3></p>
+            </div>
+            <div class="span6"><p></p>
+              <p><address>Prof. Dr. Hannah Bast<br>
+                   <a href="mailto:bast@informatik.uni-freiburg.de">bast@informatik.uni-freiburg.de</a>
+                 </address>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span2">
+              <p><h3>Team</h3></p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="span1.5">
+              <p><address>Eugen Sawin<br>
+                   <a href="mailto:esawin@gmail.com">esawin@gmail.com</a>
+                 </address>
+              </p>
+            </div>
+            <div class="span1.5">
+              <p><address>Philip Stahl<br>
+                   <a href="mailto:stahl@informatik.uni-freiburg.de">stahl@informatik.uni-freiburg.de</a>
+                 </address>
+              </p>
+            </div>
+            <div class="span2">
+              <p><address>Jonas Sternisko<br>
+                   <a href="mailto:jonas.sternisko@mars.uni-freiburg.de">jonas.sternisko@mars.uni-freiburg.de</a>
+                 </address>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="span4">
+          <img src="img/toronto2.png" alt="Toronto"/>
+        </div>
+      </div>
+    </div>
+    <div class="row"><br>
+    <div class="span6"><br>
+      <h2>Motivation</h2>
+      <p>All <em>state-of-the-art routing algorithms</em> for <strong>road networks</strong> perform poorly on <strong>transit networks</strong>. One efficient method to compute optimal routes on transit networks is based on <strong>transfer patterns</strong>. It provides fast query response times even on huge networks.</p>
+      <p>However, due to the high time-complexity of the transfer patterns precomputation, <strong>dynamic real-time events</strong> like delays or connectivity problems could reduce the reliability of this method und thus the usability in real-world applications.</p>
+    </div><br>
+    <div class="span6">
+      <h2>Task</h2>
+      <p>This project is divided into two tasks. The first task is the creation of an <strong>efficient route planner</strong> for transit networks based on transfer patterns. Using the route planner, experiments on the <strong>robustness of transfer patterns</strong> on dynamic real-time events are to be conducted.</p>
+      <p>Because of the long duration of the complete transfer patterns precomputation, only <strong>time-efficient partial updates</strong> of the network are practical.
+      The experiment should reveal how reliable transfer patterns are at sustaining the optimal routes on dynamic transit delays without a complete precomputation. Such robustness is an important criteria for the practicality of transfer patterns in real-world applications.</p>
+    </div><br>
+    </div>
+  </section>
+  <br><br><br><br><br><br><br>
+
+ <!-- Footer
+  ================================================== -->
+  <footer class="footer">
+    <p>&copy; 2011-2012: Eugen Sawin, Philip Stahl, Jonas Sternisko</p>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+  </footer>
+
+</div><!-- /container -->
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/application.js"></script>
+<script src="js/bootswatch.js"></script>
+</body>
+</html>

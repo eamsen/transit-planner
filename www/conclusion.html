@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Transit Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="css/bootstrap-simplex.css" rel="stylesheet">
+  <link href="css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="css/docs.css" rel="stylesheet">
+</head>
+<body data-spy="scroll" data-target=".subnav" data-offset="50">
+<div class="container">
+
+  <!-- Masthead
+  ================================================== -->
+  <header class="jumbotron subhead" id="concepts">
+    <h1>Transit Planner</h1>
+    <p class="lead">An experiment on transfer patterns robustness in the presence of real-time updates</p>
+    <div class="subnav">
+      <ul class="nav nav-pills">
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="concepts.html">Concepts</a></li>
+        <li><a href="implementation.html">Implementation</a></li>
+        <li><a href="results.html">Results</a></li>
+        <li class="active"><a href="conclusion.html">Conclusion</a></li>
+        <li><a href="code.html">Code</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section id="conclusion">
+    <div class="page-header">
+      <h1>Conclusion</h1>
+    </div>
+    <p>This page discusses our experimental results and their implications.</p>
+
+    <div class="row"><br>
+      <div class="span6"><br>
+        <h2>Conclusion</h2>
+        <p>The results show clearly that the transfer patterns
+  computed for the unbiased transit network allow for correct routing on a delayed
+  network. Even for scenarios with high share of delay and high average
+  delay the failure rate of the transfer pattern based routing is sufficiently
+  low to be negelectable in real-world applications. Exemplary reviews of the
+  failing queries have also shown that most of the non-optimal transfer
+  patterns paths would not be necessarily perceived as irrational routes by
+  travelers.</p>
+        <p>The results support the idea of
+  transfer pattern routing: There are only a limited number of good trip plans for any
+  pair of stops. If the favorite trip is delayed or cancelled, there are only
+  few alternatives, one of which is simply waiting for the next trip of the
+  same line. This is especially true for short-distance transits. For
+  long-distance transits this is not always the case. E.g. when travelling
+  through multiple cities and experiencing a major delay on the favorite trip,
+  a feasible alternative can differ essentially from the usual route. It could
+  even lead through different cities. However, such cases are handled well by
+  the redundancies introduced through hub stations, since any long trip
+  probably leads through a hub.</p>
+  
+        <p>Transfer patterns are robust to delay because of the redundant information
+  obtained during the precomputation for each stop. The building process
+  of the query graph creates additional routes that are suboptimal in 
+  the original network maybe optimal in the delayed network.</p>
+
+        <p>We have shown that real-time updates in the network do not necessarily
+  require a full recompuation of the transfer patterns. It suffices to temporarily
+  change the direct connection database. This has low computational effort, so
+  Transfer Pattern Routing can adapt fast to real-time updates without suffering
+  quality of shortest path queries.</p>
+      </div><br>
+      <div class="span6">
+        <h2>Future work</h2>
+        <p>Our experiments have been conducted on artificial data. We assumed the delay of routes is independently distributed over all lines, and has a constant amount starting at one stop of a line. In real applications, this is not true. Lines depend on each other. A crashed bus may block an entire route for some hours, delaying other trips as well. Moreover, once delayed a transit vehicle probably sums up more delay because it runs out of its usual schedule. It remains to repeat our experiments on real-world data for delay. However, such data is not available by the time of writing.</p>
+        
+        <p>Transfer patterns allow for almost correct routing in the presence of delay due to the redundant information of shortest paths between stops independent of the departure time. Another topic for future research is if the robustness to real-time updates can be improved further by increasing that redundancy. In other words, during precomputation not only the shortest path, but for example the best 5% of paths are used to create the transfer pattern. </p>
+      </div>
+    </div>
+  </section>
+  <br><br><br><br>
+
+ <!-- Footer
+  ================================================== -->
+  <footer class="footer">
+    <p>&copy; 2011-2012: Eugen Sawin, Philip Stahl, Jonas Sternisko</p>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+  </footer>
+
+</div><!-- /container -->
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/application.js"></script>
+<script src="js/bootswatch.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Transit Planner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link href="css/bootstrap-simplex.css" rel="stylesheet">
+  <link href="css/bootstrap-responsive.css" rel="stylesheet">
+  <link href="css/docs.css" rel="stylesheet">
+</head>
+<body data-spy="scroll" data-target=".subnav" data-offset="50">
+<div class="container">
+
+  <!-- Masthead
+  ================================================== -->
+  <header class="jumbotron subhead" id="results">
+    <h1>Transit Planner</h1>
+    <p class="lead">An experiment on transfer patterns robustness in the presence of real-time updates</p>
+    <div class="subnav">
+      <ul class="nav nav-pills">
+        <li><a href="index.html">Overview</a></li>
+        <li><a href="concepts.html">Concepts</a></li>
+        <li><a href="implementation.html">Implementation</a></li>
+        <li class="active"><a href="results.html">Results</a></li>
+        <li><a href="conclusion.html">Conclusion</a></li>
+        <li><a href="code.html">Code</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section id="results">
+    <div class="page-header">
+      <h1>Results</h1>
+    </div>
+    <p>On this page we present the setting and results of our experiments.</p>
+
+    <div class="row"><br>
+    <div class="span6"><br>
+      <h2>Experimental Setup</h2>
+      <p>We compute the transfer pattern database for the original
+  transit network created for one service day. To evaluate the effect of delay
+  on the correctness of transfer patterns routing, we modify the original trips
+  according to the selected scenario. We run transfer pattern shortest path
+  queries with the original transfer patterns using direct connection data
+  stemming from the modified GTFS data. The result of that query is compared to
+  the result of a Dijkstra on the modified network. For each dataset and each
+  scenario, including the original network, we run 15,000 random
+  queries.</p>
+      <p>To reduce the precomputation time of the transfer patterns, we limit
+  the search from each stop to three transfers maximum. As a result of
+  this, hub-based transfer pattern queries may find paths with up to six transfers.</p>
+  <p>In times of low transit activity, e.g.
+  during the night, many routes require more transfers than in regular periods.
+  Due to the three-transfers-restriction the reference Dijkstra cannot find a
+  suitable shortest path, although it often searches the whole network. In
+  order to reduce the number of empty query responses and thereby reducing the
+  time needed to conduct the experiments, we restricted the query time between 6am
+  and 6pm. Depending on the dataset, we can still compare about 13,000
+  of the 15,000 performed queries.</p>
+    </div><br>
+    <div class="span6">
+      <h2>Test Networks</h2>
+      <p>All tests are performed on two data sets: Toronto and New
+  York City. Toronto, which stems from a single <a href="http://www.toronto.ca/open)">GTFS feed</a>, has a
+  network of <em>10,883 stops</em>, <em>40,651 trips</em>, <em>4,498,284 nodes</em> and <em>7,434,641 arcs</em>. The <a href="http://www.mta.info/developers">New York City data set</a>
+  comprises the GTFS feeds of the subway, the bus networks for all five
+  boroughs and the NYC bus company&rsquo;s data, set and has <em>16,765 stops</em>, <em>61,474
+  trips</em>, <em>6,880,107 nodes</em> and <em>11,372,629 arcs</em> for a single day. Note that the GTFS data needs some preprocessing (sorting, replace special characters etc.) to be understood by our parser. The actual data we used to conduct the experiments can be found in the <a href="code.html">code section</a>.</p>
+      <p>For each dataset we test 7 different scenarios. The first
+  represents the <code><em>Original</em></code> transit network of a given data set without any
+  delays. The first three scenarios are described by a single delay function
+  used to update 25% of the trips respectively. They differ in the amount of
+  delay, applying <code><em>Low</em></code> (scenario 1), <code><em>Medium</em></code> (scenario 2) and <code><em>High</em></code> (scenario 3)
+  delay.</p>
+      <p>The remaining three scenarios are a
+  combination of delay functions. Scenario 4 represents a good working transit
+  network with a small percentage of trips with little delay (10% with 5
+  minutes, 3% with 15 minutes, 1% with 50 minutes). Scenario 5 delays 20 per
+  cent of all trips for 5 minutes, 10 per cent for 15 minutes and 5 per cent
+  for 50 minutes. The last scenario induces a delay for all trips in the
+  network. 40% of all trips are delayed with <code><em>Low</em></code>, 40% <code><em>Medium</em></code>  and 20% with <code><em>High</em></code>. We call the latter
+  scenarios <code><em>&quot;Switzerland&quot;</em></code>, <code><em>&quot;Germany&quot;</em></code>, and <code><em>&quot;India&quot;</em></code>.</p>
+  </div><br>
+  </div>
+  <div class="row"><br>
+  <div class="span12"><br>
+  <h2>Scenarios</h2>
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Delay Frequency A [%]</th>
+        <th>Delay Time A [min]</th>
+        <th>Delay Frequency B [%]</th>
+        <th>Delay Time B [min]</th>
+        <th>Delay Frequency C [%]</th>
+        <th>Delay Time C [min]</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>0</td>
+        <td><code><em>Original</em></code></td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td><code><em>Low</em></code></td>
+        <td>25</td>
+        <td>5</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><code><em>Medium</em></code></td>
+        <td>25</td>
+        <td>15</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><code><em>High</em></code></td>
+        <td>25</td>
+        <td>50</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td><code><em>&quot;Switzerland&quot;</em></code></td>
+        <td>10</td>
+        <td>5</td>
+        <td>3</td>
+        <td>15</td>
+        <td>1</td>
+        <td>50</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td><code><em>&quot;Germany&quot;</em></code></td>
+        <td>20</td>
+        <td>5</td>
+        <td>10</td>
+        <td>15</td>
+        <td>5</td>
+        <td>50</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td><code><em>&quot;India&quot;</em></code></td>
+        <td>40</td>
+        <td>10</td>
+        <td>40</td>
+        <td>10</td>
+        <td>20</td>
+        <td>50</td>
+      </tr>
+    </tbody>
+  </table>
+    </div><br>
+    </div>
+    <div class="row"><br>
+    <div class="span12"><br>
+      <h2>Evaluation</h2>
+      <p>For each query we compare the result of the Dijkstra
+  search with the result of the transfer pattern search. If for each path found
+  by the Dijkstra search there is a path of equal costs found by the transfer
+  patterns search, the query is classified as <strong>Equal</strong>. If this criteria fails for
+  a query, but the costs of the corresponding paths differ at most by 20% and the penalties
+  differ at most by 1, the
+  query is classified as <strong>Almost Equal</strong>. In all other cases, if there is at least
+  one optimal path which has no matching transfer pattern path, the queries
+  are classified as <strong>Failing</strong>.</p>
+    <p>In a first set of experiments we limited the paths to 3 transfers (not listed here, results are a subset of the presented experiments). In the second series we did not limit the number of transfers. To force the Dijkstra to similar routes as Transfer Pattern Routing, we initially limit the Dijkstra to 3 transfers and lift this restriction for paths that transfer at a hub. In the seconds setting, the structure of the query graph allows for paths with more than 3 transfers without traversing a hub. Refer to the <a href="implementation.html#query_graph">implementation of the query graph</a> for further information. This leads to query responses where Transfer Pattern Routing finds a hub-free path with cost A, while the path found by the Dijkstra transfers at a hubs and has cost B (with A &lt; B). In the second series of experiments we have the additional class <strong>Long paths without hub</strong> for such queries.</p>
+    </div><br>
+  </div><br>
+
+  <div class="row">
+    <div class="span12">
+      <table class="table table-striped table-bordered"> 
+        <caption>
+          <h3>New York City</h3>
+          <p><em>16,765 stops, 61,474 trips, 6,880,107 nodes and 11,372,629 arcs</em></p>
+        </caption>
+        <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>Total</th>
+          <th>Empty</th>
+          <th>Equal</th>
+          <th>Almost Equal</th>
+          <th>Failing</th>
+          <th>Long paths without hub</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code><em>Original</em></code></td>
+          <td>15,000</td>
+          <td>1,750</td>
+          <td>8,723 (65.83%)</td>
+          <td>3620 (27.32%)</td>
+          <td>315 (2.38%)</td>
+          <td>592 (4.47%)</td>
+        </tr>
+        <tr>
+          <td><code><em>Low</em></code></td>
+          <td>15,000</td>
+          <td>1,695</td>
+          <td>8,824 (66.32%)</td>
+          <td>3,536 (26.58%)</td>
+          <td>329 (2,47%)</td>
+          <td>616 (4,63%)</td>    
+        </tr>
+        <tr>
+          <td><code><em>Medium</em></code></td>
+          <td>15,000</td>
+          <td>1,774</td>
+          <td>8,690 (65.70%)</td>
+          <td>3,474 (26.27%)</td>
+          <td>376 (2.84%)</td>
+          <td>686 (5.19%)</td>  
+        </tr>
+        <tr>
+          <td><code><em>High</em></code></td>
+          <td>15,000</td>
+          <td>1,644</td>
+          <td>8,730 (65.36%)</td>
+          <td>3,531 (26.44%)</td>
+          <td>378 (2.83%)</td>
+          <td>717 (5.37%)</td>  
+        </tr>
+        <tr>
+          <td><code><em>Switzerland</em></code></td>
+          <td>15,000</td>
+          <td>1,786</td>
+          <td>8,754 (66.25%)</td>
+          <td>3,499 (26.48%)</td>
+          <td>351 (2.66%)</td>
+          <td>610 (4.62%)</td>  
+        </tr>
+        <tr>
+          <td><code><em>Germany</em></code></td>
+          <td>15,000</td>
+          <td>1,707</td>
+          <td>8,768 (65.96%)</td>
+          <td>3,488 (26.24%)</td>
+          <td>358 (2.69%)</td>
+          <td>679 (5.11%)</td>  
+        </tr>
+        <tr>
+          <td><code><em>India</em></code></td>
+          <td>15,000</td>
+          <td>1,767</td>
+          <td>8,319 (62.87%)</td>
+          <td>3,772 (28.50%)</td>
+          <td>410 (3.10%)</td>
+          <td>732 (5.53%)</td>  
+      </tr> 
+    </tbody>
+
+    </table>
+    </div><br>
+  </div><br>
+
+
+    <div class="row">
+    <div class="span6">
+        <p>
+          <img src="images/nyc_almost.png"/>
+        </p>
+    </div>
+    <div class="span6">
+        <p>
+          <img src="images/nyc_failing.png"/>
+        </p>
+    </div><br>
+  </div><br>
+    
+
+  <div class="row">
+    <div class="span12">
+      <table class="table table-striped table-bordered"> 
+        <caption>
+          <h3>Toronto</h3>
+          <p><em>10,883 stops, 40,651 trips, 4,498,284 nodes and 7,434,641 arcs</em></p>
+        </caption>
+        <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>Total</th>
+          <th>Empty</th>
+          <th>Equal</th>
+          <th>Almost Equal</th>
+          <th>Failing</th>
+          <th>Long path without hub</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code><em>Original</em></code></td>
+          <td>15,000</td>
+          <td>1,501</td>
+          <td>11,720 (86.82%)</td>
+          <td>1,240 (9.19%)</td>
+          <td>145 (1.07%)</td>
+          <td>394 (2.92%)</td>
+        </tr>
+        <tr>
+          <td><code><em>Low</em></code></td>
+          <td>15,000</td>
+          <td>1,447</td>
+          <td>11,648 (85.94%)</td>
+          <td>1,364 (10.06%)</td>
+          <td>160 (1.18%)</td>
+          <td>381 (2.81%)</td>
+        </tr>
+        <tr>
+          <td><code><em>Medium</em></code></td>
+          <td>15,000</td>
+          <td>1,396</td>
+          <td>11,645 (85.60%)</td>
+          <td>1,408 (10.35%)</td>
+          <td>168 (1.23%)</td>
+          <td>383 (2.82%)</td>
+        </tr>
+        <tr>
+          <td><code><em>High</em></code></td>
+          <td>15,000</td>
+          <td>1,437</td>
+          <td>11,468 (84.55%)</td>
+          <td>1,528 (11.27%)</td>
+          <td>187 (1.38%)</td>
+          <td>380 (2.80%)</td>
+        </tr>
+        <tr>
+          <td><code><em>Switzerland</em></code></td>
+          <td>15,000</td>
+          <td>1,489</td>
+          <td>11,644 (86.18%)</td>
+          <td>1,312 (9.71%)</td>
+          <td>148 (1.10%)</td>
+          <td>407 (3.01%)</td>
+        </tr>
+        <tr>
+          <td><code><em>Germany</em></code></td>
+          <td>15,000</td>
+          <td>1,416</td>
+          <td>11,590 (85.32%)</td>
+          <td>1,425 (10.49%)</td>
+          <td>168 (1.24%)</td>
+          <td>401 (2.95%)</td>
+        </tr>
+        <tr>
+          <td><code><em>India</em></code></td>
+          <td>15,000</td>
+          <td>1,401</td>
+          <td>11,145 (81.95%)</td>
+          <td>1,794 (13.19%)</td>
+          <td>231 (1.70%)</td>
+          <td>429 (3.15%)</td>
+        </tr>
+      </table>
+    </div><br>
+  </div><br>
+  <div class="row">
+    <div class="span6">
+        <p>
+          <img src="images/toronto_almost.png"/>
+        </p>
+    </div>
+    <div class="span6">
+        <p>
+          <img src="images/toronto_failing.png"/>
+        </p>
+    </div><br>
+  </div><br>
+  <div class="row">
+    <div class="span6">
+      <h2>Analysis</h2>
+      <p>The scenarios can be subdivided in three groups: The
+  baseline with the <code><em>Original</em></code> scenario, scenarios 1 - 3 as
+  <em>artificial</em> scenarios with only one delay function and the
+  scenarios 4 - 6 as <em>real-world</em> scenarios with combinations of different
+  delay functions.</p>
+  
+      <p>To explain the remaining share of non-equal
+  queries for the baseline, we refer to the <a href="implementation.html#problems">discussion of
+  problems</a> our implementation still has.</p>
+  
+        <p>We start our analysis of the results examining the
+  relationship between the individual scenarios within each group. For the NYC
+  dataset the percentage of queries
+  classified as <strong>Equal</strong> decreases with more delay, whereas the percentages of
+  queries classified as <strong>Failing</strong> increases. The same aspect can
+  be found for the <em>real-world</em> scenario group and the NYC dataset. The queries classified as <strong>Almost Equal</strong> behave quite similar, except for the experiments on New York City with unlimited transfers. In this setting there is a minor shift from <strong>Almost Equal</strong> to <strong>Equal</strong> for the first scenarios.</p>
+  
+  <p>For the Toronto dataset the percentage of <strong>Failing</strong> and <strong>Almost Equal</strong> queries in the <em>real-world</em> group show a more or less ascending
+  order. The same results can be observed for New York City. For both data sets the third scenario of both groups
+  exhibit the smallest share of <strong>Equal</strong> queries and the largest percentage of <strong>Almost Equal</strong> 
+  and <strong>Failing</strong> queries. As expected, delay has an observeable influence to the quality of the routing results.</p>
+  
+       <p>In general, the results show that with increasing average
+       amount of delay the percentage of <strong>Equal</strong> queries decreases only slightly. For queries which
+       lose their status as <strong>Equal</strong>, the transfer pattern search in some cases
+  found alternative routes with acceptable costs classified as <strong>Almost Equal</strong>. The share of this class of queries rises compared to the baseline by at most 3.0% for Toronto and by 1.18% for New York City. There is the tendency of an increasing amount of <strong>Long paths without hub</strong>.
+  Just in a few cases the search fails due to a lack of alternative transfer patterns and the query is
+  classified as <strong>Failing</strong>. The differences between the share of <strong>Failing</strong> in the baseline and in the worst scenarios is not big enough to speak of a pejoration: There are 0.67% more failings queries for Toronto, and 0.72% for NYC.</p>
+
+    <p>Comparing the values of both data sets to each other it
+    becomes obvious that the quality of the queries for Toronto is better than for
+    New York City, generally having more queries classified as <strong>Equal</strong> and less as <strong>Almost Equal</strong> or <strong>Failing</strong>.
+    This may be caused by the size and structure of the transit network, allowing for longer travels with more transfers in New York. As the delay increases, the percentage of <strong>Equal</strong> falls faster for Toronto (share is 4.87% smaller in the worst scenario) than for New York City (2.96% decrease compared to baseline). For the latter, there are even two scenarios where the share of such queries slightly increases. We may infer from these observations that the robustness of Transfer Pattern Routing towards real-time updates depends on the structure of the underlying transit network.</p>
+  </div>
+    <div class="span6">
+      <h2>Performance Recap</h2>
+      <p>
+      <table class="table table-striped table-bordered">
+        <caption>
+          <h4>Query Times on New York City in [ms]</h4>
+        </caption>
+        <thead>
+          <tr>
+            <th>Algorithm</th>
+            <th>Average</th>
+            <th>Median</th>
+            <th>90%-ile</th>
+            <th>99%-ile</th>
+            <th>Min</th>
+            <th>Max</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dijkstra</td>
+            <td>2,169</td>
+            <td>1,763</td>
+            <td>3,487</td>
+            <td>6,673</td>
+            <td>1,093</td>
+            <td>8,635</td>
+          </tr>
+          <tr>
+            <td>Transfer Patterns</td>
+            <td>27</td>
+            <td>29</td>
+            <td>43</td>
+            <td>56</td>
+            <td>1</td>
+            <td>78</td>
+          </tr>
+        </tbody>
+      </table>
+      </p>
+      <p>
+      <table class="table table-striped table-bordered">
+        <caption>
+          <h4>Query Times on Toronto in [ms]</h4>
+        </caption>
+        <thead>
+          <tr>
+            <th>Algorithm</th>
+            <th>Average</th>
+            <th>Median</th>
+            <th>90%-ile</th>
+            <th>99%-ile</th>
+            <th>Min</th>
+            <th>Max</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Dijkstra</td>
+            <td>1,546</td>
+            <td>1,270</td>
+            <td>2,552</td>
+            <td>4,124</td>
+            <td>736</td>
+            <td>5,694</td>
+          </tr>
+          <tr>
+            <td>Transfer Patterns</td>
+            <td>10</td>
+            <td>10</td>
+            <td>15</td>
+            <td>21</td>
+            <td>1</td>
+            <td>26</td>
+          </tr>
+        </tbody>
+      </table>
+      </p>
+      <p>
+      <table class="table table-striped table-bordered">
+        <caption>
+          <h4>Query Graph Sizes in [number of arcs]</h4>
+        </caption>
+        <thead>
+          <tr>
+            <th>Network</th>
+            <th>Average</th>
+            <th>Median</th>
+            <th>90%-ile</th>
+            <th>99%-ile</th>
+            <th>Min</th>
+            <th>Max</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>NYC</td>
+            <td>2,143</td>
+            <td>2,264</td>
+            <td>2,969</td>
+            <td>3,496</td>
+            <td>0</td>
+            <td>4,247</td>
+          </tr>
+          <tr>
+            <td>Toronto</td>
+            <td>1,624</td>
+            <td>1,643</td>
+            <td>2,115</td>
+            <td>2,522</td>
+            <td>0</td>
+            <td>3,390</td>
+          </tr>
+        </tbody>
+      </table>
+      </p>
+    </div><br>
+    </div>
+  </section>
+  <br><br><br><br>
+
+ <!-- Footer
+  ================================================== -->
+  <footer class="footer">
+    <p>&copy; 2011-2012: Eugen Sawin, Philip Stahl, Jonas Sternisko</p>
+    <p class="pull-right"><a href="#">Back to top</a></p>
+  </footer>
+
+</div><!-- /container -->
+
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap-dropdown.js"></script>
+<script src="js/bootstrap-scrollspy.js"></script>
+<script src="js/bootstrap-collapse.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script src="js/application.js"></script>
+<script src="js/bootswatch.js"></script>
+</body>
+</html>
