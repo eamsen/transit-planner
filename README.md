@@ -59,7 +59,9 @@ To test code style conformance with the [Google C++ Style Guide](http://google-s
 
 ## Usage
 To start the Transit Planner server use:
+
     $ ./build/ServerMain [-i <datasets>] [-m <num-workers>] [-p <port>]
+
 where `<dataset>` are the GTFS directories of the transit networks,  
 `<num-workers>` are the maximum number of threads to be used and  
 `<port>` is the port to be used for listening.  
