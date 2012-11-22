@@ -1,4 +1,4 @@
-Transit Planner - an experiment on transfer patterns robustness
+Transit Planner - An Experiment on Transfer Patterns Robustness
 ===============================================================
 
 
@@ -25,9 +25,10 @@ Licensing
 Transit Planner and all its auxiliary modules are released under the *GNU General Public License Version 3*, see the COPYING notice for the full license text.
 
 
-Latest Version
+Version
 --------------
-To obtain the latest version of Transit Planner, visit the code section of the
+This is Eugen Sawin's fork of the original team project.
+To obtain the version used during the experiments, visit the code section of the
 [project overview website](http://stromboli.informatik.uni-freiburg.de/student-projects/philip+jonas+eugen).
 
 
@@ -82,12 +83,3 @@ Usage
 
   To show the full usage help use:  
   `$ ./build/ServerMain -h`
-
-
-Show the documentation
-----------------------
-  In the www-directory, run
-  '$ python -m SimpleHTTPServer PORT'
-  and find the documentation at http://localhost:PORT or serve the 
-  contents with any other server.
-
