@@ -1,4 +1,5 @@
-# Transit Planner - An Experiment on Transfer Patterns Robustness
+# Transit Planner
+An Experiment on Transfer Patterns Robustness
 
 ## Description
 Transit Planner is an *efficient route planner* for public transportation networks.
