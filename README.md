@@ -1,7 +1,7 @@
 # Transit Planner
 An Experiment on Transfer Patterns Robustness
 
-Visit the [project site](http://stromboli.informatik.uni-freiburg.de/student-projects/philip+jonas+eugen/) for an overview and experimental results.
+Visit the [project site](https://ad-publications.cs.uni-freiburg.de/student-projects/transfer-patterns-robustness/index.html) for an overview and experimental results.
 
 ## Description
 Transit Planner is an *efficient route planner* for public transportation networks.
